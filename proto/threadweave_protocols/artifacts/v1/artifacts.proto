@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package threadweave.artifacts.v1;
+package threadweave_protocols.artifacts.v1;
 
-import "threadweave/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
 
 // ArtifactReference identifies externally stored content.
 message ArtifactReference {
@@ -17,5 +17,5 @@ message ArtifactReference {
   // Checksum of the content, including an algorithm prefix when applicable.
   string checksum = 5;
   // Extensible artifact attributes.
-  threadweave.common.v1.Metadata metadata = 6;
+  threadweave_protocols.common.v1.Metadata metadata = 6;
 }

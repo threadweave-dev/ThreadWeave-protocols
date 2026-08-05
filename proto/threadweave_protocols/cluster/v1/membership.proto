@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package threadweave.cluster.v1;
+package threadweave_protocols.cluster.v1;
 
 import "google/protobuf/timestamp.proto";
-import "threadweave/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
 
 // ClusterMemberStatus is a provisional observed membership status.
 enum ClusterMemberStatus {
@@ -25,7 +25,7 @@ message ClusterMember {
   // Time at which this membership view was observed.
   google.protobuf.Timestamp observed_at = 4;
   // Extensible member attributes.
-  threadweave.common.v1.Metadata metadata = 5;
+  threadweave_protocols.common.v1.Metadata metadata = 5;
 }
 
 // MembershipSnapshot is a provisional point-in-time membership view.

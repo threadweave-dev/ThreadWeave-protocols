@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package threadweave.execution.v1;
+package threadweave_protocols.execution.v1;
 
-import "threadweave/common/v1/metadata.proto";
-import "threadweave/common/v1/resources.proto";
-import "threadweave/execution/v1/jobs.proto";
-import "threadweave/execution/v1/results.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/resources.proto";
+import "threadweave_protocols/execution/v1/jobs.proto";
+import "threadweave_protocols/execution/v1/results.proto";
 
 // ExecutionService accepts task submissions and exposes resulting jobs.
 service ExecutionService {
@@ -26,11 +26,11 @@ message SubmitTaskRequest {
   // Serialization format used for arguments.
   string serialization_format = 4;
   // Requested compute resources, when constrained.
-  threadweave.common.v1.ResourceRequirements resources = 5;
+  threadweave_protocols.common.v1.ResourceRequirements resources = 5;
   // Caller-provided key used according to the idempotency RFC.
   optional string idempotency_key = 6;
   // Extensible submission attributes.
-  threadweave.common.v1.Metadata metadata = 7;
+  threadweave_protocols.common.v1.Metadata metadata = 7;
 }
 
 // SubmitTaskResponse returns the job created for a submission.

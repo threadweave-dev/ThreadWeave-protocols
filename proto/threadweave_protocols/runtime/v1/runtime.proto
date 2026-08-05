@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package threadweave.runtime.v1;
+package threadweave_protocols.runtime.v1;
 
-import "threadweave/runtime/v1/heartbeat.proto";
-import "threadweave/runtime/v1/registration.proto";
+import "threadweave_protocols/runtime/v1/heartbeat.proto";
+import "threadweave_protocols/runtime/v1/registration.proto";
 
 // RuntimeService is the cross-process control-plane boundary for runtimes.
 service RuntimeService {

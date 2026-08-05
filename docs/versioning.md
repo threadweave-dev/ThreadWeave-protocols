@@ -6,7 +6,7 @@ additions, and a patch release contains documentation or other non-contractual
 corrections.
 
 Protobuf packages are independently versioned in their final component, for
-example `threadweave.execution.v1`. A repository release can contain several
+example `threadweave_protocols.execution.v1`. A repository release can contain several
 package versions.
 
 ## Evolution within a package

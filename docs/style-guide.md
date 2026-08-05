@@ -1,6 +1,6 @@
 # Protobuf Style Guide
 
-- **Packages:** use `threadweave.<domain>.vN`, all lowercase.
+- **Packages:** use `threadweave_protocols.<domain>.vN`, all lowercase.
 - **Files:** use lowercase `snake_case.proto`, grouped by package.
 - **Services:** use PascalCase nouns ending in `Service`.
 - **RPCs:** use PascalCase verb phrases such as `SubmitTask`.

@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package threadweave.cluster.v1;
+package threadweave_protocols.cluster.v1;
 
 import "google/protobuf/timestamp.proto";
-import "threadweave/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
 
 // ClusterHeartbeat is a provisional node liveness observation.
 // Failure-detection, lease, and timing semantics are defined outside Protobuf.
@@ -15,5 +15,5 @@ message ClusterHeartbeat {
   // Time at which the node created this heartbeat.
   google.protobuf.Timestamp observed_at = 3;
   // Extensible heartbeat attributes.
-  threadweave.common.v1.Metadata metadata = 4;
+  threadweave_protocols.common.v1.Metadata metadata = 4;
 }

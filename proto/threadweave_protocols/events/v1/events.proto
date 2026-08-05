@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package threadweave.events.v1;
+package threadweave_protocols.events.v1;
 
 import "google/protobuf/timestamp.proto";
-import "threadweave/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
 
 // EventEnvelope carries a versioned opaque event across ThreadWeave boundaries.
 message EventEnvelope {
@@ -22,5 +22,5 @@ message EventEnvelope {
   // Opaque, externally serialized event payload.
   bytes payload = 7;
   // Extensible event attributes.
-  threadweave.common.v1.Metadata metadata = 8;
+  threadweave_protocols.common.v1.Metadata metadata = 8;
 }

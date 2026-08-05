@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package threadweave.common.v1;
+package threadweave_protocols.common.v1;
 
 // ResourceRequirements describes requested or available compute resources.
 message ResourceRequirements {

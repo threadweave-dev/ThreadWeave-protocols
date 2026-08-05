@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package threadweave.execution.v1;
+package threadweave_protocols.execution.v1;
 
 import "google/protobuf/timestamp.proto";
-import "threadweave/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
 
 // JobState is the observable lifecycle state of a job.
 // State-transition semantics are defined by the relevant RFC.
@@ -34,5 +34,5 @@ message Job {
   // One-based execution attempt number, or zero before the first attempt.
   uint32 attempt_number = 7;
   // Extensible job attributes.
-  threadweave.common.v1.Metadata metadata = 8;
+  threadweave_protocols.common.v1.Metadata metadata = 8;
 }

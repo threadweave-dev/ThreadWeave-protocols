@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package threadweave.runtime.v1;
+package threadweave_protocols.runtime.v1;
 
-import "threadweave/common/v1/metadata.proto";
-import "threadweave/common/v1/resources.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/resources.proto";
 
 // RuntimeRegistration describes a runtime joining the ThreadWeave control plane.
 message RuntimeRegistration {
@@ -18,9 +18,9 @@ message RuntimeRegistration {
   // Stable capability identifiers advertised by the runtime.
   repeated string capabilities = 5;
   // Resources available when registration is reported.
-  threadweave.common.v1.ResourceRequirements available_resources = 6;
+  threadweave_protocols.common.v1.ResourceRequirements available_resources = 6;
   // Extensible registration attributes.
-  threadweave.common.v1.Metadata metadata = 7;
+  threadweave_protocols.common.v1.Metadata metadata = 7;
 }
 
 // RegisterRuntimeRequest contains a runtime registration.

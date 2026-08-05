@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package threadweave.runtime.v1;
+package threadweave_protocols.runtime.v1;
 
 import "google/protobuf/timestamp.proto";
-import "threadweave/common/v1/resources.proto";
+import "threadweave_protocols/common/v1/resources.proto";
 
 // RuntimeStatus is a runtime's self-reported operating status.
 enum RuntimeStatus {
@@ -23,7 +23,7 @@ message RuntimeHeartbeat {
   // Self-reported runtime status.
   RuntimeStatus status = 3;
   // Available resources at the time of the report.
-  threadweave.common.v1.ResourceRequirements available_resources = 4;
+  threadweave_protocols.common.v1.ResourceRequirements available_resources = 4;
   // Time at which the runtime created this report.
   google.protobuf.Timestamp observed_at = 5;
 }
