@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package threadweave.common.v1;
+
+import "threadweave/common/v1/metadata.proto";
+
+// Error provides structured application error details alongside gRPC status.
+message Error {
+  // Stable, machine-readable error code.
+  string code = 1;
+  // Human-readable diagnostic message.
+  string message = 2;
+  // Additional error attributes.
+  threadweave.common.v1.Metadata metadata = 3;
+}

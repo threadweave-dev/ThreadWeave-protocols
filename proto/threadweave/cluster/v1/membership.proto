@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package threadweave.cluster.v1;
+
+import "google/protobuf/timestamp.proto";
+import "threadweave/common/v1/metadata.proto";
+
+// ClusterMemberStatus is a provisional observed membership status.
+enum ClusterMemberStatus {
+  CLUSTER_MEMBER_STATUS_UNSPECIFIED = 0;
+  CLUSTER_MEMBER_STATUS_JOINING = 1;
+  CLUSTER_MEMBER_STATUS_ACTIVE = 2;
+  CLUSTER_MEMBER_STATUS_LEAVING = 3;
+  CLUSTER_MEMBER_STATUS_UNREACHABLE = 4;
+}
+
+// ClusterMember is a provisional view of a ThreadWeave cluster node.
+message ClusterMember {
+  // Stable node identifier.
+  string node_id = 1;
+  // Network endpoint advertised by the node.
+  string endpoint = 2;
+  // Observed membership status.
+  ClusterMemberStatus status = 3;
+  // Time at which this membership view was observed.
+  google.protobuf.Timestamp observed_at = 4;
+  // Extensible member attributes.
+  threadweave.common.v1.Metadata metadata = 5;
+}
+
+// MembershipSnapshot is a provisional point-in-time membership view.
+message MembershipSnapshot {
+  // Members visible in this snapshot.
+  repeated ClusterMember members = 1;
+  // Time at which the snapshot was created.
+  google.protobuf.Timestamp observed_at = 2;
+}

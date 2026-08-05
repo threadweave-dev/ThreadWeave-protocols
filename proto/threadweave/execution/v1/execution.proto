@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package threadweave.execution.v1;
+
+import "threadweave/common/v1/metadata.proto";
+import "threadweave/common/v1/resources.proto";
+import "threadweave/execution/v1/jobs.proto";
+import "threadweave/execution/v1/results.proto";
+
+// ExecutionService accepts task submissions and exposes resulting jobs.
+service ExecutionService {
+  // SubmitTask creates a job from a reusable task definition.
+  rpc SubmitTask(SubmitTaskRequest) returns (SubmitTaskResponse);
+  // GetJob retrieves the current representation of a job.
+  rpc GetJob(GetJobRequest) returns (GetJobResponse);
+}
+
+// SubmitTaskRequest describes a new execution submission.
+message SubmitTaskRequest {
+  // Namespace containing the task definition.
+  string application_namespace = 1;
+  // Name of the reusable task definition.
+  string task_name = 2;
+  // Opaque, externally serialized task arguments.
+  bytes arguments = 3;
+  // Serialization format used for arguments.
+  string serialization_format = 4;
+  // Requested compute resources, when constrained.
+  threadweave.common.v1.ResourceRequirements resources = 5;
+  // Caller-provided key used according to the idempotency RFC.
+  optional string idempotency_key = 6;
+  // Extensible submission attributes.
+  threadweave.common.v1.Metadata metadata = 7;
+}
+
+// SubmitTaskResponse returns the job created for a submission.
+message SubmitTaskResponse {
+  // Newly created or previously associated job.
+  Job job = 1;
+}
+
+// GetJobRequest identifies a job to retrieve.
+message GetJobRequest {
+  // Stable identifier of the requested job.
+  string job_id = 1;
+}
+
+// GetJobResponse contains the requested job and any available result.
+message GetJobResponse {
+  // Current job representation.
+  Job job = 1;
+  // Result details, when available.
+  JobResult result = 2;
+}

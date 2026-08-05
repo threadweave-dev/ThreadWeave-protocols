@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package threadweave.runtime.v1;
+
+import "google/protobuf/timestamp.proto";
+import "threadweave/common/v1/resources.proto";
+
+// RuntimeStatus is a runtime's self-reported operating status.
+enum RuntimeStatus {
+  RUNTIME_STATUS_UNSPECIFIED = 0;
+  RUNTIME_STATUS_READY = 1;
+  RUNTIME_STATUS_BUSY = 2;
+  RUNTIME_STATUS_DRAINING = 3;
+  RUNTIME_STATUS_UNHEALTHY = 4;
+}
+
+// RuntimeHeartbeat is a point-in-time status report from a runtime.
+message RuntimeHeartbeat {
+  // Stable identifier of the reporting runtime.
+  string runtime_id = 1;
+  // Monotonically increasing sequence number for this runtime.
+  uint64 sequence_number = 2;
+  // Self-reported runtime status.
+  RuntimeStatus status = 3;
+  // Available resources at the time of the report.
+  threadweave.common.v1.ResourceRequirements available_resources = 4;
+  // Time at which the runtime created this report.
+  google.protobuf.Timestamp observed_at = 5;
+}
+
+// ReportHeartbeatRequest contains a runtime heartbeat.
+message ReportHeartbeatRequest {
+  // Heartbeat reported by the runtime.
+  RuntimeHeartbeat heartbeat = 1;
+}
+
+// ReportHeartbeatResponse acknowledges a runtime heartbeat.
+message ReportHeartbeatResponse {
+  // Whether the heartbeat was accepted.
+  bool accepted = 1;
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package threadweave.common.v1;
+
+// ResourceRequirements describes requested or available compute resources.
+message ResourceRequirements {
+  // CPU capacity in thousandths of a CPU core.
+  uint64 cpu_millicores = 1;
+  // Memory capacity in bytes.
+  uint64 memory_bytes = 2;
+  // Number of GPU devices.
+  uint32 gpu_count = 3;
+}

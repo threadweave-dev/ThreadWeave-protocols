@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package threadweave.execution.v1;
+
+import "threadweave/artifacts/v1/artifacts.proto";
+import "threadweave/common/v1/errors.proto";
+
+// JobResult contains output or failure details for a completed job.
+message JobResult {
+  // Opaque, externally serialized inline result payload.
+  bytes payload = 1;
+  // Serialization format used for payload.
+  string serialization_format = 2;
+  // Reference to externally stored result content, when present.
+  threadweave.artifacts.v1.ArtifactReference artifact = 3;
+  // Structured failure details, when the job failed.
+  threadweave.common.v1.Error failure = 4;
+}

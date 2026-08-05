@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package threadweave.runtime.v1;
+
+import "threadweave/runtime/v1/heartbeat.proto";
+import "threadweave/runtime/v1/registration.proto";
+
+// RuntimeService is the cross-process control-plane boundary for runtimes.
+service RuntimeService {
+  // RegisterRuntime reports runtime identity, capabilities, and resources.
+  rpc RegisterRuntime(RegisterRuntimeRequest) returns (RegisterRuntimeResponse);
+  // ReportHeartbeat reports a point-in-time runtime status snapshot.
+  rpc ReportHeartbeat(ReportHeartbeatRequest) returns (ReportHeartbeatResponse);
+}

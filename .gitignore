@@ -1,0 +1,21 @@
+# Generated bindings are produced only for local and CI validation.
+/generated/
+
+# Buf and editor caches.
+/.cache/
+/.idea/
+/.vscode/
+
+# Operating-system and temporary files.
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+
+# Language-specific build and environment output.
+/target/
+__pycache__/
+*.py[cod]
+/.venv/
+/venv/
+node_modules/

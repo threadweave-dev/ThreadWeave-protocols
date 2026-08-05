@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package threadweave.execution.v1;
+
+import "google/protobuf/timestamp.proto";
+import "threadweave/common/v1/metadata.proto";
+
+// JobState is the observable lifecycle state of a job.
+// State-transition semantics are defined by the relevant RFC.
+enum JobState {
+  JOB_STATE_UNSPECIFIED = 0;
+  JOB_STATE_PENDING = 1;
+  JOB_STATE_SCHEDULED = 2;
+  JOB_STATE_RUNNING = 3;
+  JOB_STATE_SUCCEEDED = 4;
+  JOB_STATE_FAILED = 5;
+  JOB_STATE_CANCELLED = 6;
+}
+
+// Job is a submitted execution of a reusable task definition.
+message Job {
+  // Stable identifier assigned to the job.
+  string job_id = 1;
+  // Namespace containing the task definition.
+  string application_namespace = 2;
+  // Name of the reusable task definition.
+  string task_name = 3;
+  // Current observable job state.
+  JobState state = 4;
+  // Time at which the job was created.
+  google.protobuf.Timestamp created_at = 5;
+  // Time at which the job was most recently updated.
+  google.protobuf.Timestamp updated_at = 6;
+  // One-based execution attempt number, or zero before the first attempt.
+  uint32 attempt_number = 7;
+  // Extensible job attributes.
+  threadweave.common.v1.Metadata metadata = 8;
+}

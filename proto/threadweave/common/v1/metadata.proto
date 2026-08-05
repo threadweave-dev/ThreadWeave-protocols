@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package threadweave.common.v1;
+
+// Metadata contains extensible, non-semantic attributes.
+message Metadata {
+  // Entries are application-defined key/value attributes.
+  map<string, string> entries = 1;
+}

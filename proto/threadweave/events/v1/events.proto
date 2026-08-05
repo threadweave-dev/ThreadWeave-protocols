@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package threadweave.events.v1;
+
+import "google/protobuf/timestamp.proto";
+import "threadweave/common/v1/metadata.proto";
+
+// EventEnvelope carries a versioned opaque event across ThreadWeave boundaries.
+message EventEnvelope {
+  // Globally unique event identifier.
+  string event_id = 1;
+  // Stable, machine-readable event type.
+  string event_type = 2;
+  // Time at which the event occurred.
+  google.protobuf.Timestamp occurred_at = 3;
+  // Identifier of the component that emitted the event.
+  string source = 4;
+  // Identifier of the entity described by the event.
+  string subject = 5;
+  // Version of the schema used to serialize payload.
+  string schema_version = 6;
+  // Opaque, externally serialized event payload.
+  bytes payload = 7;
+  // Extensible event attributes.
+  threadweave.common.v1.Metadata metadata = 8;
+}

@@ -1,0 +1,11 @@
+version: v2
+clean: true
+plugins:
+  # Example Rust message and service types generated with Prost.
+  - remote: buf.build/community/neoeinstein-prost
+    out: generated/rust
+  # Example Python message types generated with the official Protobuf plugin.
+  - remote: buf.build/protocolbuffers/python
+    out: generated/python
+inputs:
+  - directory: proto

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package threadweave.cluster.v1;
+
+import "google/protobuf/timestamp.proto";
+import "threadweave/common/v1/metadata.proto";
+
+// ClusterHeartbeat is a provisional node liveness observation.
+// Failure-detection, lease, and timing semantics are defined outside Protobuf.
+message ClusterHeartbeat {
+  // Stable identifier of the reporting node.
+  string node_id = 1;
+  // Monotonically increasing sequence number for this node.
+  uint64 sequence_number = 2;
+  // Time at which the node created this heartbeat.
+  google.protobuf.Timestamp observed_at = 3;
+  // Extensible heartbeat attributes.
+  threadweave.common.v1.Metadata metadata = 4;
+}

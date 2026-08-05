@@ -1,0 +1,85 @@
+# ThreadWeave Protocols
+
+> **Protocol Buffers define how ThreadWeave messages and services are represented. RFCs define what they mean.**
+
+This repository is the canonical source of the versioned, machine-readable
+Protocol Buffer contracts used by the ThreadWeave Rust core, SDKs, runtimes,
+and future implementations. RFCs remain authoritative for lifecycle semantics,
+state transitions, retries, idempotency, and behavioral guarantees.
+
+This repository contains protocol contracts, supporting documentation, and
+validation configuration only. It does not contain business logic, runtime
+implementations, or generated SDK code.
+
+## Layout
+
+- `proto/threadweave/`: versioned Protobuf packages grouped by domain.
+- `docs/`: versioning, compatibility, and style rules.
+- `scripts/`: portable lint and generation entry points.
+- `.github/workflows/`: CI validation.
+- `buf.yaml` and `buf.gen.yaml`: Buf workspace and generation configuration.
+
+## Prerequisites
+
+Install the [Buf CLI](https://buf.build/docs/cli/installation/). For example:
+
+```sh
+brew install bufbuild/buf/buf
+```
+
+## Validate and generate
+
+Check formatting and lint rules:
+
+```sh
+./scripts/lint.sh
+```
+
+Generate example Rust and Python bindings locally:
+
+```sh
+./scripts/generate.sh
+```
+
+On Windows PowerShell:
+
+```powershell
+.\scripts\generate.ps1
+```
+
+Generation uses remote Buf plugins and writes to the ignored `generated/`
+directory. Generated files are disposable validation artifacts and must not be
+committed.
+
+To check compatibility against `main`:
+
+```sh
+buf breaking --against '.git#branch=main'
+```
+
+## Consuming a release
+
+Downstream repositories should pin a tagged release of this repository, obtain
+the `proto/` tree at that tag, and generate bindings in their own build or
+release process. Consumers must not depend on an unpinned branch. Core and SDK
+versions may differ, but the protocol versions they support must be compatible.
+
+## Compatibility and contributions
+
+Stable `v1` packages evolve additively. Field numbers and enum numeric values
+are permanent; removed fields are reserved. Breaking changes require a new
+package version and a repository major release. See
+[`docs/compatibility.md`](docs/compatibility.md) and
+[`docs/versioning.md`](docs/versioning.md).
+
+Protocol changes must:
+
+1. have their semantics specified or updated in the relevant RFC;
+2. remain deliberately small and transport-focused;
+3. include clear comments and documentation;
+4. pass formatting, lint, generation, and breaking-change checks;
+5. avoid committing generated output.
+
+## License
+
+Apache-2.0.

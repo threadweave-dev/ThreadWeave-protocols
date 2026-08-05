@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package threadweave.runtime.v1;
+
+import "threadweave/common/v1/metadata.proto";
+import "threadweave/common/v1/resources.proto";
+
+// RuntimeRegistration describes a runtime joining the ThreadWeave control plane.
+message RuntimeRegistration {
+  // Stable identifier of the runtime or node.
+  string runtime_id = 1;
+  // Human-readable runtime implementation name.
+  string runtime_name = 2;
+  // Runtime implementation version.
+  string runtime_version = 3;
+  // Serialization formats accepted by the runtime.
+  repeated string supported_serialization_formats = 4;
+  // Stable capability identifiers advertised by the runtime.
+  repeated string capabilities = 5;
+  // Resources available when registration is reported.
+  threadweave.common.v1.ResourceRequirements available_resources = 6;
+  // Extensible registration attributes.
+  threadweave.common.v1.Metadata metadata = 7;
+}
+
+// RegisterRuntimeRequest contains a runtime registration.
+message RegisterRuntimeRequest {
+  // Registration details reported by the runtime.
+  RuntimeRegistration registration = 1;
+}
+
+// RegisterRuntimeResponse acknowledges a runtime registration.
+message RegisterRuntimeResponse {
+  // Whether the registration was accepted.
+  bool accepted = 1;
+}
