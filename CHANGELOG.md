@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-08-12
+
+### Added
+
+- Add a unified Rust crate providing Prost messages and Tonic gRPC bindings.
+- Publish the Rust crate to crates.io as part of tagged protocol releases.
+
 ## [1.1.0] - 2026-08-12
 
 ### Added

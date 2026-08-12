@@ -42,8 +42,25 @@ jobs:
             echo "::error::Tag ${GITHUB_REF_NAME} does not match VERSION (${expected})"
             exit 1
           fi
+          version="${expected#v}"
+          manifest_version="$(sed -n 's/^version = "\([^"]*\)"/\1/p' sdk/rust/Cargo.toml | head -n 1)"
+          if [[ "${manifest_version}" != "${version}" ]]; then
+            echo "::error::sdk/rust/Cargo.toml version (${manifest_version}) does not match VERSION (${version})"
+            exit 1
+          fi
 
       - name: Publish tagged schema to BSR
         env:
           BUF_TOKEN: ${{ secrets.BUF_TOKEN }}
         run: buf push --git-metadata
+
+      - name: Prepare Rust SDK crates
+        run: bash scripts/prepare-rust-sdk.sh
+
+      - name: Verify Rust SDK package
+        run: cargo package --manifest-path sdk/rust/Cargo.toml
+
+      - name: Publish Rust SDK to crates.io
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
+        run: cargo publish --manifest-path sdk/rust/Cargo.toml

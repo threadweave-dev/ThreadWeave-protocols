@@ -1,5 +1,10 @@
 # Generated bindings are produced only for local and CI validation.
 /generated/
+/sdk/rust/proto/
+/sdk/rust/prost/
+/sdk/rust/tonic/
+/sdk/rust/Cargo.lock
+/sdk/rust/target/
 
 # Buf and editor caches.
 /.cache/
