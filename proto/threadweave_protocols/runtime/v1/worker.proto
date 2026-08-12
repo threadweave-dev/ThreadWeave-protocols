@@ -30,7 +30,7 @@ message WorkerRegistration {
   threadweave_protocols.common.v1.Metadata metadata = 9;
 }
 
-message ExecutionAssignment {
+message AssignExecutionRequest {
   string assignment_id = 1;
   string execution_id = 2;
   string job_id = 3;
@@ -42,13 +42,13 @@ message ExecutionAssignment {
   threadweave_protocols.common.v1.Metadata metadata = 9;
 }
 
-message AssignmentResponse {
+message AssignExecutionResponse {
   string assignment_id = 1;
   bool accepted = 2;
   optional string rejection_code = 3;
 }
 
-message ExecutionReport {
+message ReportExecutionRequest {
   string report_id = 1;
   string assignment_id = 2;
   string execution_id = 3;

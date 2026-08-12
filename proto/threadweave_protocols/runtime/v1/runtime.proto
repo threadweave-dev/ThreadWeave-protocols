@@ -13,8 +13,8 @@ service RuntimeService {
   // ReportHeartbeat reports a point-in-time runtime status snapshot.
   rpc ReportHeartbeat(ReportHeartbeatRequest) returns (ReportHeartbeatResponse);
   rpc RegisterWorker(RegisterWorkerRequest) returns (RegisterWorkerResponse);
-  rpc AssignExecution(ExecutionAssignment) returns (AssignmentResponse);
-  rpc ReportExecution(ExecutionReport) returns (ReportExecutionResponse);
+  rpc AssignExecution(AssignExecutionRequest) returns (AssignExecutionResponse);
+  rpc ReportExecution(ReportExecutionRequest) returns (ReportExecutionResponse);
 }
 
 message RegisterWorkerRequest {
