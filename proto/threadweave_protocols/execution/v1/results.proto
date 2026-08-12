@@ -15,4 +15,8 @@ message JobResult {
   threadweave_protocols.artifacts.v1.ArtifactReference artifact = 3;
   // Structured failure details, when the job failed.
   threadweave_protocols.common.v1.Error failure = 4;
+  // Execution attempt that produced this outcome.
+  string execution_id = 5;
+  // Additional externally stored result content.
+  repeated threadweave_protocols.artifacts.v1.ArtifactReference artifacts = 6;
 }

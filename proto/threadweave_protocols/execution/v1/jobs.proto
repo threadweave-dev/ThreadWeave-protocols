@@ -17,6 +17,15 @@ enum JobState {
   JOB_STATE_CANCELLED = 6;
   // The Core accepted the submission; no execution work has started.
   JOB_STATE_ACCEPTED = 7;
+  JOB_STATE_REJECTED = 8;
+}
+
+// TaskIdentity identifies one immutable task implementation.
+message TaskIdentity {
+  string namespace = 1;
+  string application = 2;
+  string name = 3;
+  string version = 4;
 }
 
 // Job is a submitted execution of a reusable task definition.
@@ -37,4 +46,10 @@ message Job {
   uint32 attempt_number = 7;
   // Extensible job attributes.
   threadweave_protocols.common.v1.Metadata metadata = 8;
+  // Exact immutable task definition selected for this job.
+  TaskIdentity task = 9;
+  // Execution that causally submitted this job, when nested.
+  optional string parent_execution_id = 10;
+  // Root correlation identity shared by a causal execution tree.
+  optional string root_execution_id = 11;
 }

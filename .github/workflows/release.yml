@@ -34,6 +34,15 @@ jobs:
       - name: Build schema
         run: buf build
 
+      - name: Verify release version
+        shell: bash
+        run: |
+          expected="v$(tr -d '[:space:]' < VERSION)"
+          if [[ "${GITHUB_REF_NAME}" != "${expected}" ]]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match VERSION (${expected})"
+            exit 1
+          fi
+
       - name: Publish tagged schema to BSR
         env:
           BUF_TOKEN: ${{ secrets.BUF_TOKEN }}

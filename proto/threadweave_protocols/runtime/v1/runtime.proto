@@ -4,6 +4,7 @@ package threadweave_protocols.runtime.v1;
 
 import "threadweave_protocols/runtime/v1/heartbeat.proto";
 import "threadweave_protocols/runtime/v1/registration.proto";
+import "threadweave_protocols/runtime/v1/worker.proto";
 
 // RuntimeService is the cross-process control-plane boundary for runtimes.
 service RuntimeService {
@@ -11,4 +12,11 @@ service RuntimeService {
   rpc RegisterRuntime(RegisterRuntimeRequest) returns (RegisterRuntimeResponse);
   // ReportHeartbeat reports a point-in-time runtime status snapshot.
   rpc ReportHeartbeat(ReportHeartbeatRequest) returns (ReportHeartbeatResponse);
+  rpc RegisterWorker(RegisterWorkerRequest) returns (RegisterWorkerResponse);
+  rpc AssignExecution(ExecutionAssignment) returns (AssignmentResponse);
+  rpc ReportExecution(ExecutionReport) returns (ReportExecutionResponse);
 }
+
+message RegisterWorkerRequest { WorkerRegistration registration = 1; }
+message RegisterWorkerResponse { bool accepted = 1; optional string lease_id = 2; }
+message ReportExecutionResponse { bool accepted = 1; }

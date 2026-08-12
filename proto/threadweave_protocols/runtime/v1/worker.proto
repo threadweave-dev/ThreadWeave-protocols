@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package threadweave_protocols.runtime.v1;
+
+import "google/protobuf/timestamp.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/resources.proto";
+import "threadweave_protocols/execution/v1/execution.proto";
+import "threadweave_protocols/execution/v1/jobs.proto";
+import "threadweave_protocols/execution/v1/results.proto";
+
+message ExecutorDescriptor {
+  string executor_id = 1;
+  string runtime = 2;
+  string implementation_version = 3;
+  repeated string serialization_formats = 4;
+  repeated string capabilities = 5;
+  uint32 concurrency_limit = 6;
+}
+
+message WorkerRegistration {
+  string worker_id = 1;
+  optional string node_id = 2;
+  string generation = 3;
+  string implementation_version = 4;
+  repeated string protocol_versions = 5;
+  string endpoint = 6;
+  repeated ExecutorDescriptor executors = 7;
+  threadweave_protocols.common.v1.ResourceRequirements capacity = 8;
+  threadweave_protocols.common.v1.Metadata metadata = 9;
+}
+
+message ExecutionAssignment {
+  string assignment_id = 1;
+  string execution_id = 2;
+  string job_id = 3;
+  threadweave_protocols.execution.v1.TaskIdentity task = 4;
+  bytes arguments = 5;
+  string serialization_format = 6;
+  threadweave_protocols.common.v1.ResourceRequirements reserved_resources = 7;
+  optional google.protobuf.Timestamp deadline = 8;
+  threadweave_protocols.common.v1.Metadata metadata = 9;
+}
+
+message AssignmentResponse {
+  string assignment_id = 1;
+  bool accepted = 2;
+  optional string rejection_code = 3;
+}
+
+message ExecutionReport {
+  string report_id = 1;
+  string assignment_id = 2;
+  string execution_id = 3;
+  uint64 sequence_number = 4;
+  threadweave_protocols.execution.v1.ExecutionState state = 5;
+  threadweave_protocols.execution.v1.JobResult outcome = 6;
+  google.protobuf.Timestamp observed_at = 7;
+}

@@ -10,4 +10,14 @@ message ResourceRequirements {
   uint64 memory_bytes = 2;
   // Number of GPU devices.
   uint32 gpu_count = 3;
+  // GPU memory capacity in bytes.
+  uint64 gpu_memory_bytes = 4;
+  // Ephemeral storage capacity in bytes.
+  uint64 storage_bytes = 5;
+  // Network capacity in bits per second.
+  uint64 network_bits_per_second = 6;
+  // Implementation-defined consumable resources.
+  map<string, uint64> custom_quantities = 7;
+  // Qualitative properties that must be present on an eligible worker.
+  repeated string required_capabilities = 8;
 }

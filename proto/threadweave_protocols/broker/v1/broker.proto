@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package threadweave_protocols.broker.v1;
+
+import "google/protobuf/timestamp.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
+
+// BrokerEnvelope transports commands and reports without interpreting them.
+message BrokerEnvelope {
+  string message_id = 1;
+  string message_kind = 2;
+  string schema_version = 3;
+  string source = 4;
+  string destination = 5;
+  google.protobuf.Timestamp created_at = 6;
+  optional google.protobuf.Timestamp expires_at = 7;
+  bytes payload = 8;
+  optional string content_type = 9;
+  optional string correlation_id = 10;
+  optional string causation_id = 11;
+  optional string trace_context = 12;
+  threadweave_protocols.common.v1.Metadata routing_headers = 13;
+}
+
+enum DeliveryDisposition {
+  DELIVERY_DISPOSITION_UNSPECIFIED = 0;
+  DELIVERY_DISPOSITION_ACKNOWLEDGED = 1;
+  DELIVERY_DISPOSITION_RETRY = 2;
+  DELIVERY_DISPOSITION_REJECTED = 3;
+  DELIVERY_DISPOSITION_QUARANTINED = 4;
+}
+
+message DeliveryResult {
+  string message_id = 1;
+  DeliveryDisposition disposition = 2;
+  optional string reason = 3;
+}

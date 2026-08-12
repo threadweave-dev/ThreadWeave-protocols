@@ -3,6 +3,7 @@ syntax = "proto3";
 package threadweave_protocols.execution.v1;
 
 import "threadweave_protocols/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/errors.proto";
 import "threadweave_protocols/common/v1/resources.proto";
 import "threadweave_protocols/execution/v1/jobs.proto";
 import "threadweave_protocols/execution/v1/results.proto";
@@ -13,6 +14,47 @@ service ExecutionService {
   rpc SubmitTask(SubmitTaskRequest) returns (SubmitTaskResponse);
   // GetJob retrieves the current representation of a job.
   rpc GetJob(GetJobRequest) returns (GetJobResponse);
+  rpc RegisterTask(RegisterTaskRequest) returns (RegisterTaskResponse);
+  rpc CancelJob(CancelJobRequest) returns (CancelJobResponse);
+  rpc ListExecutions(ListExecutionsRequest) returns (ListExecutionsResponse);
+  rpc GetExecution(GetExecutionRequest) returns (GetExecutionResponse);
+}
+
+enum CommandStatus {
+  COMMAND_STATUS_UNSPECIFIED = 0;
+  COMMAND_STATUS_ACCEPTED = 1;
+  COMMAND_STATUS_REJECTED = 2;
+  COMMAND_STATUS_INDETERMINATE = 3;
+}
+
+message CommandResult {
+  CommandStatus status = 1;
+  threadweave_protocols.common.v1.Error error = 2;
+}
+
+message TaskDefinition {
+  TaskIdentity identity = 1;
+  repeated string serialization_formats = 2;
+  threadweave_protocols.common.v1.ResourceRequirements default_resources = 3;
+  threadweave_protocols.common.v1.Metadata metadata = 4;
+}
+
+message RegisterTaskRequest {
+  string command_id = 1;
+  TaskDefinition task = 2;
+}
+
+message RegisterTaskResponse { CommandResult result = 1; }
+
+message CancelJobRequest {
+  string command_id = 1;
+  string job_id = 2;
+  optional string reason = 3;
+}
+
+message CancelJobResponse {
+  CommandResult result = 1;
+  Job job = 2;
 }
 
 // SubmitTaskRequest describes a new execution submission.
@@ -31,13 +73,60 @@ message SubmitTaskRequest {
   optional string idempotency_key = 6;
   // Extensible submission attributes.
   threadweave_protocols.common.v1.Metadata metadata = 7;
+  // Stable identity of this command across client retries.
+  string command_id = 8;
+  // Exact immutable task identity. New clients must populate this field.
+  TaskIdentity task = 9;
+  // Execution that caused this submission, when nested.
+  optional string parent_execution_id = 10;
+  // Optional scheduling priority; greater values have higher priority.
+  optional int32 priority = 11;
+  optional string queue = 12;
 }
 
 // SubmitTaskResponse returns the job created for a submission.
 message SubmitTaskResponse {
   // Newly created or previously associated job.
   Job job = 1;
+  CommandResult result = 2;
 }
+
+enum ExecutionState {
+  EXECUTION_STATE_UNSPECIFIED = 0;
+  EXECUTION_STATE_CREATED = 1;
+  EXECUTION_STATE_ASSIGNED = 2;
+  EXECUTION_STATE_ACCEPTED = 3;
+  EXECUTION_STATE_RUNNING = 4;
+  EXECUTION_STATE_SUCCEEDED = 5;
+  EXECUTION_STATE_FAILED = 6;
+  EXECUTION_STATE_TIMED_OUT = 7;
+  EXECUTION_STATE_CANCELLED = 8;
+  EXECUTION_STATE_REJECTED = 9;
+}
+
+message Execution {
+  string execution_id = 1;
+  string job_id = 2;
+  uint32 attempt_number = 3;
+  ExecutionState state = 4;
+  optional string worker_id = 5;
+  optional string executor_id = 6;
+  JobResult outcome = 7;
+}
+
+message ListExecutionsRequest {
+  string job_id = 1;
+  uint32 page_size = 2;
+  optional string page_token = 3;
+}
+
+message ListExecutionsResponse {
+  repeated Execution executions = 1;
+  optional string next_page_token = 2;
+}
+
+message GetExecutionRequest { string execution_id = 1; }
+message GetExecutionResponse { Execution execution = 1; }
 
 // GetJobRequest identifies a job to retrieve.
 message GetJobRequest {

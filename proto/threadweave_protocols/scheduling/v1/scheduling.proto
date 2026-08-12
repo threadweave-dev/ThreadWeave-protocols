@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package threadweave_protocols.scheduling.v1;
+
+import "google/protobuf/timestamp.proto";
+import "threadweave_protocols/common/v1/resources.proto";
+
+enum SchedulingDecisionKind {
+  SCHEDULING_DECISION_KIND_UNSPECIFIED = 0;
+  SCHEDULING_DECISION_KIND_PLACED = 1;
+  SCHEDULING_DECISION_KIND_DEFERRED = 2;
+  SCHEDULING_DECISION_KIND_UNSCHEDULABLE = 3;
+  SCHEDULING_DECISION_KIND_REJECTED = 4;
+}
+
+message SchedulingRequest {
+  string request_id = 1;
+  string execution_id = 2;
+  threadweave_protocols.common.v1.ResourceRequirements requirements = 3;
+  repeated string hard_constraints = 4;
+  repeated string preferences = 5;
+  optional int32 priority = 6;
+  optional string queue = 7;
+  optional google.protobuf.Timestamp deadline = 8;
+}
+
+message SchedulingDecision {
+  string request_id = 1;
+  SchedulingDecisionKind kind = 2;
+  optional string worker_id = 3;
+  optional string executor_id = 4;
+  optional string reservation_id = 5;
+  repeated string reasons = 6;
+  optional google.protobuf.Timestamp reconsider_after = 7;
+}
+
+enum ReservationState {
+  RESERVATION_STATE_UNSPECIFIED = 0;
+  RESERVATION_STATE_RESERVED = 1;
+  RESERVATION_STATE_ALLOCATED = 2;
+  RESERVATION_STATE_RELEASED = 3;
+  RESERVATION_STATE_EXPIRED = 4;
+}
+
+message ResourceReservation {
+  string reservation_id = 1;
+  string execution_id = 2;
+  string worker_id = 3;
+  threadweave_protocols.common.v1.ResourceRequirements resources = 4;
+  ReservationState state = 5;
+  google.protobuf.Timestamp valid_until = 6;
+}

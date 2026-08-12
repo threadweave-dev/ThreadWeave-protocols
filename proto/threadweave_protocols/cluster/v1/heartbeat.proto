@@ -16,4 +16,8 @@ message ClusterHeartbeat {
   google.protobuf.Timestamp observed_at = 3;
   // Extensible heartbeat attributes.
   threadweave_protocols.common.v1.Metadata metadata = 4;
+  // Incarnation of the reporting participant.
+  string incarnation_id = 5;
+  // Stable cluster identity.
+  string cluster_id = 6;
 }

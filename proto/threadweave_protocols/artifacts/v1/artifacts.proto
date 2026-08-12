@@ -3,6 +3,7 @@ syntax = "proto3";
 package threadweave_protocols.artifacts.v1;
 
 import "threadweave_protocols/common/v1/metadata.proto";
+import "google/protobuf/timestamp.proto";
 
 // ArtifactReference identifies externally stored content.
 message ArtifactReference {
@@ -18,4 +19,21 @@ message ArtifactReference {
   string checksum = 5;
   // Extensible artifact attributes.
   threadweave_protocols.common.v1.Metadata metadata = 6;
+  repeated ArtifactLocation locations = 7;
+}
+
+message ArtifactLocation {
+  string uri = 1;
+  optional string credential_reference = 2;
+  google.protobuf.Timestamp observed_at = 3;
+  optional google.protobuf.Timestamp expires_at = 4;
+  threadweave_protocols.common.v1.Metadata metadata = 5;
+}
+
+message ArtifactResidency {
+  string artifact_id = 1;
+  string worker_id = 2;
+  string location = 3;
+  google.protobuf.Timestamp observed_at = 4;
+  google.protobuf.Timestamp expires_at = 5;
 }

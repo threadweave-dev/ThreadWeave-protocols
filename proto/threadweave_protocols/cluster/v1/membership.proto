@@ -26,6 +26,10 @@ message ClusterMember {
   google.protobuf.Timestamp observed_at = 4;
   // Extensible member attributes.
   threadweave_protocols.common.v1.Metadata metadata = 5;
+  string incarnation_id = 6;
+  string role = 7;
+  repeated string supported_protocol_versions = 8;
+  google.protobuf.Timestamp lease_expires_at = 9;
 }
 
 // MembershipSnapshot is a provisional point-in-time membership view.
@@ -34,4 +38,7 @@ message MembershipSnapshot {
   repeated ClusterMember members = 1;
   // Time at which the snapshot was created.
   google.protobuf.Timestamp observed_at = 2;
+  // Monotonic membership revision used to detect missed updates.
+  uint64 revision = 3;
+  string cluster_id = 4;
 }

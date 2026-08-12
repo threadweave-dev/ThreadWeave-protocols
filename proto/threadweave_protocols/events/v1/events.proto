@@ -23,4 +23,26 @@ message EventEnvelope {
   bytes payload = 7;
   // Extensible event attributes.
   threadweave_protocols.common.v1.Metadata metadata = 8;
+  // Stable aggregate identity for ordered lifecycle events.
+  optional string aggregate_id = 9;
+  // Monotonic revision within aggregate_id.
+  optional uint64 aggregate_revision = 10;
+  optional string correlation_id = 11;
+  optional string causation_id = 12;
+  optional string trace_context = 13;
+}
+
+message SubscribeEventsRequest {
+  repeated string event_types = 1;
+  optional string subject = 2;
+  optional string cursor = 3;
+}
+
+message SubscribeEventsResponse {
+  EventEnvelope event = 1;
+  string cursor = 2;
+}
+
+service EventService {
+  rpc SubscribeEvents(SubscribeEventsRequest) returns (stream SubscribeEventsResponse);
 }
