@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package threadweave_protocols.execution.v1;
 
-import "threadweave_protocols/common/v1/metadata.proto";
 import "threadweave_protocols/common/v1/errors.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
 import "threadweave_protocols/common/v1/resources.proto";
 import "threadweave_protocols/execution/v1/jobs.proto";
 import "threadweave_protocols/execution/v1/results.proto";
@@ -44,7 +44,9 @@ message RegisterTaskRequest {
   TaskDefinition task = 2;
 }
 
-message RegisterTaskResponse { CommandResult result = 1; }
+message RegisterTaskResponse {
+  CommandResult result = 1;
+}
 
 message CancelJobRequest {
   string command_id = 1;
@@ -125,8 +127,12 @@ message ListExecutionsResponse {
   optional string next_page_token = 2;
 }
 
-message GetExecutionRequest { string execution_id = 1; }
-message GetExecutionResponse { Execution execution = 1; }
+message GetExecutionRequest {
+  string execution_id = 1;
+}
+message GetExecutionResponse {
+  Execution execution = 1;
+}
 
 // GetJobRequest identifies a job to retrieve.
 message GetJobRequest {

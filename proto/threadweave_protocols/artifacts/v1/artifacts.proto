@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package threadweave_protocols.artifacts.v1;
 
-import "threadweave_protocols/common/v1/metadata.proto";
 import "google/protobuf/timestamp.proto";
+import "threadweave_protocols/common/v1/metadata.proto";
 
 // ArtifactReference identifies externally stored content.
 message ArtifactReference {

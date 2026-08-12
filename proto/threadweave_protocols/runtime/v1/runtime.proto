@@ -17,6 +17,13 @@ service RuntimeService {
   rpc ReportExecution(ExecutionReport) returns (ReportExecutionResponse);
 }
 
-message RegisterWorkerRequest { WorkerRegistration registration = 1; }
-message RegisterWorkerResponse { bool accepted = 1; optional string lease_id = 2; }
-message ReportExecutionResponse { bool accepted = 1; }
+message RegisterWorkerRequest {
+  WorkerRegistration registration = 1;
+}
+message RegisterWorkerResponse {
+  bool accepted = 1;
+  optional string lease_id = 2;
+}
+message ReportExecutionResponse {
+  bool accepted = 1;
+}
