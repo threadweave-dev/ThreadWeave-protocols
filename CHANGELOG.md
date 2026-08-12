@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-08-12
+
+### Fixed
+
+- Allow the release workflow to package the protocol sources assembled in the
+  Rust crate after checkout.
+
 ## [1.1.1] - 2026-08-12
 
 ### Added

@@ -1,6 +1,6 @@
 [package]
 name = "threadweave-protocols"
-version = "1.1.1"
+version = "1.1.2"
 edition = "2024"
 license = "Apache-2.0"
 description = "Prost messages and Tonic gRPC bindings for the ThreadWeave protocols"
