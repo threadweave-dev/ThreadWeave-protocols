@@ -13,7 +13,10 @@ service RuntimeService {
   // ReportHeartbeat reports a point-in-time runtime status snapshot.
   rpc ReportHeartbeat(ReportHeartbeatRequest) returns (ReportHeartbeatResponse);
   rpc RegisterWorker(RegisterWorkerRequest) returns (RegisterWorkerResponse);
+  // AcquireExecution long-polls the Core for the next available assignment.
+  rpc AcquireExecution(AcquireExecutionRequest) returns (AcquireExecutionResponse);
   rpc AssignExecution(AssignExecutionRequest) returns (AssignExecutionResponse);
+  // ReportExecution advances an assigned execution through its lifecycle.
   rpc ReportExecution(ReportExecutionRequest) returns (ReportExecutionResponse);
 }
 
@@ -24,6 +27,17 @@ message RegisterWorkerResponse {
   bool accepted = 1;
   optional string lease_id = 2;
 }
+
+// AcquireExecutionRequest identifies the worker asking the Core for work.
+message AcquireExecutionRequest {
+  WorkerRegistration worker = 1;
+}
+
+// An absent assignment means that no work was available before the poll ended.
+message AcquireExecutionResponse {
+  AssignExecutionRequest assignment = 1;
+}
+
 message ReportExecutionResponse {
   bool accepted = 1;
 }
