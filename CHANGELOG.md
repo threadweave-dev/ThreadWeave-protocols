@@ -40,3 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Initial versioned ThreadWeave protocol contracts.
 - Buf lint, generation, and breaking-change configuration.
 - Protocol documentation and CI validation.
+
+## [1.2.0] - 2026-08-15
+
+### Added
+
+- Add unary long-poll execution acquisition for language runtime workers.
+- Reuse assignment and execution reporting messages for worker lifecycle updates.
