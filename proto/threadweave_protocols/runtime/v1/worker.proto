@@ -4,10 +4,87 @@ package threadweave_protocols.runtime.v1;
 
 import "google/protobuf/timestamp.proto";
 import "threadweave_protocols/common/v1/metadata.proto";
+import "threadweave_protocols/common/v1/errors.proto";
 import "threadweave_protocols/common/v1/resources.proto";
 import "threadweave_protocols/execution/v1/execution.proto";
 import "threadweave_protocols/execution/v1/jobs.proto";
 import "threadweave_protocols/execution/v1/results.proto";
+import "threadweave_protocols/runtime/v1/heartbeat.proto";
+
+// A command sent by the Worker over a persistent runtime session.
+message WorkerCommand {
+  oneof payload {
+    AssignExecutionRequest assign_execution = 1;
+    CancelExecution cancel_execution = 2;
+  }
+}
+
+message CancelExecution {
+  string assignment_id = 1;
+  string execution_id = 2;
+  optional string reason = 3;
+}
+
+// An event observed by a language runtime. The Worker remains authoritative
+// for lifecycle state and validates all execution sequence numbers.
+message RuntimeEvent {
+  oneof payload {
+    RuntimeReady ready = 1;
+    ExecutionStarted execution_started = 2;
+    ExecutionProgress execution_progress = 3;
+    ExecutionMetrics execution_metrics = 4;
+    ExecutionCompleted execution_completed = 5;
+    ExecutionFailed execution_failed = 6;
+    RuntimeHeartbeat heartbeat = 7;
+  }
+}
+
+message RuntimeReady {
+  string runtime_id = 1;
+}
+
+message ExecutionStarted {
+  string assignment_id = 1;
+  string execution_id = 2;
+  uint64 sequence_number = 3;
+  google.protobuf.Timestamp observed_at = 4;
+}
+
+message ExecutionProgress {
+  string assignment_id = 1;
+  string execution_id = 2;
+  uint64 sequence_number = 3;
+  double progress = 4;
+  google.protobuf.Timestamp observed_at = 5;
+}
+
+message ExecutionMetrics {
+  string assignment_id = 1;
+  string execution_id = 2;
+  uint64 sequence_number = 3;
+  optional uint64 elapsed_ms = 4;
+  optional uint64 deserialization_ms = 5;
+  optional uint64 execution_ms = 6;
+  optional uint64 serialization_ms = 7;
+  optional double progress = 8;
+  map<string, double> custom_metrics = 9;
+}
+
+message ExecutionCompleted {
+  string assignment_id = 1;
+  string execution_id = 2;
+  uint64 sequence_number = 3;
+  threadweave_protocols.execution.v1.JobResult result = 4;
+  google.protobuf.Timestamp observed_at = 5;
+}
+
+message ExecutionFailed {
+  string assignment_id = 1;
+  string execution_id = 2;
+  uint64 sequence_number = 3;
+  threadweave_protocols.common.v1.Error failure = 4;
+  google.protobuf.Timestamp observed_at = 5;
+}
 
 message ExecutorDescriptor {
   string executor_id = 1;

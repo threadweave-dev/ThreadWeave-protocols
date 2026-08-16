@@ -7,5 +7,7 @@ plugins:
   # Example Python message types generated with the official Protobuf plugin.
   - remote: buf.build/protocolbuffers/python
     out: generated/python
+  - remote: buf.build/grpc/python
+    out: generated/python
 inputs:
   - directory: proto
