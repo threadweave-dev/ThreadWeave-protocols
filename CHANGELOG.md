@@ -47,3 +47,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - Add unary long-poll execution acquisition for language runtime workers.
 - Reuse assignment and execution reporting messages for worker lifecycle updates.
+
+## [1.3.0] - 2026-08-16
+### Runtime sessions
+
+- Added the bidirectional `RuntimeSession` streaming RPC.
+- Added extensible `WorkerCommand` and `RuntimeEvent` envelopes using protobuf `oneof`.
+- Added assignment and cancellation commands.
+- Added runtime-ready, lifecycle, progress, metrics, failure, and heartbeat events.
+- Preserved assignment IDs, execution IDs, sequence numbers, `JobResult`, and `Error`.
+- Removed the obsolete `AcquireExecution` long-polling RPC.
+- Added Python gRPC binding generation.
+
+### Breaking changes
+
+Language runtimes must replace `AcquireExecution` polling with a persistent
+`RuntimeSession` stream.
+
+`ReportExecution` remains available for Worker-to-Core lifecycle forwarding.
